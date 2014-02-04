@@ -16,14 +16,16 @@
 
 namespace mlog {
 
-extern std::unique_ptr<logger> mlogger;
+extern logger *mlogger;
+
+void reset(logger *log);
 
 template <class logger_class> void init();
 
 class log : public leveled_logger {
       public:
 	log(mlog_level &&level, log_position position)
-	    : leveled_logger(std::move(level), mlogger.get(),
+	    : leveled_logger(std::move(level), mlogger,
 			     std::move(position)) {}
 };
 

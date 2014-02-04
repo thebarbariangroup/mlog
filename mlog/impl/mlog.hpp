@@ -12,7 +12,18 @@
 
 namespace mlog {
 
-std::unique_ptr<logger> mlogger(new standard_logger());
+//std::unique_ptr<logger> mlogger(new standard_logger());
+
+// leaks to enable logging at shutdown, not deleted unless reset by user.
+logger *mlogger = new standard_logger();
+
+void reset(logger *log) {
+	if( mlogger )
+		delete mlogger;
+
+	mlogger = log;
+}
+
 }
 
 #endif
